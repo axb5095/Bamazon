@@ -12,7 +12,7 @@ CREATE TABLE products (
   PRIMARY KEY (item_id)
 );
 
--- Creates new rows
+-- Creates new rows  
 
 INSERT INTO products (item_id, product_name, dept_name, product_price, product_quantity)
 VALUES("ALIEN 1600", "Alienware laptop", "Electronics", 2499.99, 10),

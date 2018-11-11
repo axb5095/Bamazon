@@ -1,9 +1,7 @@
 // Dependencies
 var mysql = require('mysql');
-var wrap = require('word-wrap');
-var Table = require('cli-table');
 var inquirer = require('inquirer');
-var colors = require('colors');
+
 
 // sets connection param for database connection
 var connection = mysql.createConnection({
@@ -34,20 +32,14 @@ function displayItems() {
             header.push(fields);
         }
 
-        // Create the table
-        var table = new Table({
-            head: header,
-            colWidths: [20, 55, 10, 20]
-        });
+      
 
         // gets and sets the data in the table
 
         for (var i = 0; i < result.length; i++) {
-            table.push([result[i].item_id, wrap(result[i].product_name), result[i].product_price.toFixed(2), result[i].dept_name]);
+           console.log([result[i].item_id, (result[i].product_name), result[i].product_price.toFixed(2), result[i].dept_name]);
         }
-        var output = table.toString();
-        console.log(output);
-
+     
 
         var item_ids = [];
         for (var i = 0; i < result.length; i++) {
@@ -62,8 +54,8 @@ function displayItems() {
 // list gets the items id's as an array and passed to the promt/choices param
 function purchaseItem(list) {
 
-    var prompt = inquirer.createPromptModule();
-    questions = [{
+     inquirer.prompt(
+    [{
             name: "buy",
             type: "list",
             message: "Please indicate which Item you would like to purchase?",
@@ -73,9 +65,9 @@ function purchaseItem(list) {
             name: "quantity",
             type: "input",
             message: "Please enter the item quantity?",
-        }];
+        }]
 
-        prompt(questions).then(function (answer) {
+        ).then(function (answer) {
             // sets a query to select the item the user has chosen
             var query = "SELECT item_id, product_quantity, product_price FROM products WHERE ?";
             connection.query(query, { item_id: answer.buy }, function (err, res) {
