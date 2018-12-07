@@ -2,9 +2,7 @@
 var mysql = require('mysql');
 var inquirer = require('inquirer');
 
-
-// sets connection param for database connection
-var connection = mysql.createConnection({
+var connectionstring =  {
     host: "localhost",
     port: 3306,
     // sets username
@@ -13,7 +11,11 @@ var connection = mysql.createConnection({
     password: "axb5095",
     // sets current database
     database: "bamazon_db"
-});
+}
+// sets connection param for database connection
+var connection = mysql.createConnection(
+    connectionstring
+);
 
 // makes connection with the server
 connection.connect(function (err) {
