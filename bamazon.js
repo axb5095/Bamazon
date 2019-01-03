@@ -82,14 +82,14 @@ function purchaseItem(list) {
 
 // checks quantity 
 function checkQuantity(on_stock, buy_quantity, price, item_id) {
-    if (on_stock >= buy_quantity) {
+    if (on_stock < buy_quantity) {
+        console.log(`Not enough quantity available!\nOnly ${on_stock} items available!`.red);
+        connection.end();
+    } else {
         var total_price = buy_quantity * price;
         console.log(`Your total amount is $${total_price}.\n`.green);
         // updates database
         updateQuantity(buy_quantity, item_id);
-    } else {
-        console.log(`Not enough quantity available!\nOnly ${on_stock} items available!`.red);
-        connection.end();
     }
 }
 
@@ -106,7 +106,7 @@ function updateQuantity(quantity, item_id) {
         ],
         function (error) {
             if (error) throw error;
-            console.log("Quantity was succefully updated!");
+            console.log("Quantity was successfully updated!");
             connection.end();
         });
 }
